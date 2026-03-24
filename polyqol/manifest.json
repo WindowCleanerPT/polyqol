@@ -1,1 +1,6 @@
-
+{
+  "name": "PolyQOL",
+  "author": "Window Cleaner",
+  "version": "1.0.0",
+  "main": "main.mod.js"
+}
