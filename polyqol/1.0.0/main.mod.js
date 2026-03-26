@@ -9,7 +9,7 @@ class PolyQOL extends PolyMod {
             {
                 type: MixinType.INSERT,
                 token: `(e.repeat || (0, C.GG)(this, ff, 0, "f"),`,
-                func: `ActivePolyModLoader.getMod("polyqol").attempts++,ActivePolyModLoader.getMod("polyqol").updateOverlay(),`,
+                func: `console.log("attempt fired"),ActivePolyModLoader.getMod("polyqol").attempts++,ActivePolyModLoader.getMod("polyqol").updateOverlay(),`,
             }
         );
     };
