@@ -1,4 +1,3 @@
-```js
 import { PolyMod, MixinType } from "https://cdn.polymodloader.com/cb/PolyTrackMods/PolyModLoader/0.6.0/PolyTypes.js";
 class PolyQOL extends PolyMod {
     init = (pml) => {
@@ -44,4 +43,3 @@ class PolyQOL extends PolyMod {
     }
 }
 export let polyMod = new PolyQOL();
-```
