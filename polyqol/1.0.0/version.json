@@ -1,5 +1,10 @@
 {
   "targets": ["0.6.0-beta1", "0.6.0"],
-  "dependencies": [],
+  "dependencies": [
+    {
+      "id": "pmlapi",
+      "version": "0.1.2"
+    }
+  ],
   "main": "main.mod.js"
 }
