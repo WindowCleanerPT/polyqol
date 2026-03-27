@@ -1,61 +1,47 @@
-import { PolyMod, MixinType } from "https://cdn.polymodloader.com/cb/PolyTrackMods/PolyModLoader/0.6.0/PolyTypes.js";
+import { PolyMod } from "https://cdn.polymodloader.com/cb/PolyTrackMods/PolyModLoader/0.6.0/PolyTypes.js";
 
-class PolyQOL extends PolyMod {
-    init = (pml) => {
+export default class SoundboardMod extends PolyMod {
+    init(pml) {
         this.pml = pml;
-        this.attempts = 0;
-        this.overlay = null;
 
-        // 🔥 Hook into ACTUAL reset function (Qa)
-        pml.registerGlobalMixin({
-            type: MixinType.INSERT,
-            token: `(0, C.gn)(this, _r, "m", Qa).call(this)),`,
-            func: `
-                console.log("attempt fired");
-                const mod = ActivePolyModLoader.getMod("polyqol");
-                if (mod) {
-                    mod.attempts++;
-                    mod.updateOverlay();
-                }
-            `,
+        // get pmlapi (required for sound system)
+        this.pApi = pml.getMod("pmlapi");
+
+        // create keybind category
+        pml.registerBindCategory("Soundboard");
+
+        // KEY 1
+        pml.registerKeybind("Beep", "sb_beep", "keydown", "KeyZ", null, () => {
+            this.pApi.soundManager.playSound("beep", 1);
         });
-    };
 
-    onGameLoad = () => {
-        this.createOverlay();
-        this.updateOverlay();
-    };
+        // KEY 2
+        pml.registerKeybind("Boop", "sb_boop", "keydown", "KeyX", null, () => {
+            this.pApi.soundManager.playSound("boop", 1);
+        });
 
-    createOverlay = () => {
-        // prevent duplicate overlays
-        if (this.overlay) return;
+        // KEY 3
+        pml.registerKeybind("Explosion", "sb_explode", "keydown", "KeyC", null, () => {
+            this.pApi.soundManager.playSound("explode", 1);
+        });
+    }
 
-        this.overlay = document.createElement('div');
-        this.overlay.style.cssText = `
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: rgba(0, 0, 0, 0.9);
-            color: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            font-family: monospace;
-            font-size: 14px;
-            z-index: 9999;
-            min-width: 180px;
-            border: 2px solid #4a9eff;
-        `;
-        document.body.appendChild(this.overlay);
-    };
+    postInit() {
+        // register sounds AFTER init (IMPORTANT)
 
-    updateOverlay = () => {
-        if (!this.overlay) return;
+        this.pApi.soundManager.registerSound(
+            "beep",
+            ["https://actions.google.com/sounds/v1/cartoon/beep_short.ogg"]
+        );
 
-        this.overlay.innerHTML = `
-            <div style="font-weight: bold; font-size: 16px; margin-bottom: 8px;">Session Stats</div>
-            <div>Attempts: ${this.attempts}</div>
-        `;
-    };
+        this.pApi.soundManager.registerSound(
+            "boop",
+            ["https://actions.google.com/sounds/v1/cartoon/wood_plank_flicks.ogg"]
+        );
+
+        this.pApi.soundManager.registerSound(
+            "explode",
+            ["https://actions.google.com/sounds/v1/explosions/explosion.ogg"]
+        );
+    }
 }
-
-export let polyMod = new PolyQOL();
