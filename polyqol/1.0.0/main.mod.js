@@ -1,7 +1,6 @@
 import { PolyMod } from "https://cdn.polymodloader.com/cb/PolyTrackMods/PolyModLoader/0.6.0/PolyTypes.js";
 
 class SoundboardMod extends PolyMod {
-
     play(url) {
         const audio = new Audio(url);
         audio.volume = 1;
@@ -10,7 +9,6 @@ class SoundboardMod extends PolyMod {
 
     init(pml) {
         this.pml = pml;
-
         pml.registerBindCategory("Soundboard");
 
         pml.registerKeybind("Beep", "sb_beep", "keydown", "KeyZ", null, () => {
@@ -27,4 +25,6 @@ class SoundboardMod extends PolyMod {
     }
 }
 
-export const polyMod = new SoundboardMod();
+// export instance as mutable
+let polyMod = new SoundboardMod();
+export { polyMod };
